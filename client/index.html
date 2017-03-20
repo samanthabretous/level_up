@@ -1,0 +1,38 @@
+<head>
+  <title>React and Sequelize Project Generator</title>
+  <meta charset="utf-8">
+  <meta
+    name="description"
+    content="Place a short summary of the content on the page"
+  />
+  <meta
+    name="keywords"
+    content="Place a keywords"
+  />
+  <meta name="robots" content="index,follow"/>
+  <!-- information about when last time the document was updated -->
+  <meta
+    name="revised"
+    content="React and Sequelize Project Generator, 3/20/2017"
+  />
+  <meta name="author" content="Samantha Bretous" />
+  <!-- responsive sites initial-scale 1 does not zoom-->
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+
+<body>
+  <div id='root'></div>
+  <script>
+    (function () {
+      let bundlePath = '/bundle/bundle.js';
+
+      if (typeof process !== 'undefined' && process.env.ENVIRONMENT === 'DEV') {
+        bundlePath = 'http://localhost:4000/client/view/public/bundle/bundle.js';
+      }
+
+      const bundleScriptEl = document.createElement('script');
+      bundleScriptEl.src = bundlePath;
+      document.currentScript.parentNode.insertBefore(bundleScriptEl, document.currentScript);
+    }());
+  </script>
+</body>
