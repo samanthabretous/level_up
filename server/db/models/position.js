@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       associate(models) {
         // associations can be defined here
         Position.hasMany(models.application);
+        Position.hasMany(models.contact);
       },
     },
     timestamps: false,

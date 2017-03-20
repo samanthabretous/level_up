@@ -1,8 +1,8 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Application = sequelize.define('application', {
-    name: {
-      type: DataTypes.STRING,
+    rank: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
     postURL: {
       type: DataTypes.STRING,
@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         Application.belongsTo(models.position);
         Application.belongsTo(models.source);
         Application.belongsTo(models.user);
+        Application.hasMany(models.contact);
         Application.hasMany(models.interview);
       },
     },

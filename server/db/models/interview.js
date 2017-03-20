@@ -4,8 +4,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    content: {
+      type: DataTypes.STRING,
+    },
     when: {
       type: DataTypes.DATE,
+    },
+    time: {
+      type: DataTypes.STRING,
     },
     codeChallenge: {
       type: DataTypes.BOOLEAN,
@@ -19,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false,
     },
     type: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
       validate: {
         isIn: [['phone', 'video', 'on-site']],
       },

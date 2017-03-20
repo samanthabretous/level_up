@@ -6,11 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
+      unique: true,
     },
     phone: {
-      type: DataTypes.STRING,
-    },
-    position: {
       type: DataTypes.STRING,
     },
   }, {
@@ -18,7 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       associate(models) {
         // associations can be defined here
         Contact.belongsToMany(models.interview, { through: 'interviewer' });
-        Contact.belongsTo(models.company)
+        Contact.belongsToMany(models.application, { through: 'reference' });
+        Contact.belongsTo(models.position);
+        Contact.belongsTo(models.company);
       },
     },
   });

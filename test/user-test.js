@@ -6,7 +6,7 @@ const models = require('../server/db/models');
 
 const User = models.user;
 
-describe('Demo tests', () => {
+describe('User tests', () => {
   // fake user data that we'll use for tests
   const users = [
     { email: 'test1@gmail.com', password: 'password1' },
