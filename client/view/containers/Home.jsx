@@ -1,8 +1,10 @@
 import React from 'react';
+import { Login } from '../components';
 
 const Home = () => (
   <div>
-    <h1>Welcome to the Access Code Generator!</h1>
+    <h1>Welcome to LEVEL UP!</h1>
+    <Login />
   </div>
 );
 

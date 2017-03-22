@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import axios from 'axios';
-import { Navbar } from '../components/index';
 
 class App extends Component {
   componentDidMount() {
@@ -14,7 +13,6 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar items={[{ text: 'Home', url: '/' }, { text: 'Login', url: '/login' }]} />
         {this.props.children}
       </div>
     );

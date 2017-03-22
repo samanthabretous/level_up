@@ -1,5 +1,6 @@
 import App from './App';
 import Home from './Home';
-import Login from './Login';
+import Dashboard from './Dashboard';
+import AddApplication from './AddApplication';
 
-export { App, Home, Login };
+export { App, Home, Dashboard, AddApplication };

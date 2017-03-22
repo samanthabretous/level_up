@@ -14,7 +14,7 @@ module.exports = {
     loaders: [
       {
         test: [/\.scss$/, /\.css$/],
-        loaders: ['style', 'css', 'sass'],
+        loaders: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: [/\.jsx?$/, /\.js?$/],
@@ -22,8 +22,8 @@ module.exports = {
         loaders: ['babel-loader'],
       },
       {
-        test: /\.jpe?g$|\.gif$|\.png$|^(?!.*\.inline\.svg$).*\.svg$/,
-        loader: 'url',
+        test: /\.jpe?g$|\.gif$|\.png$|\.ttf$|\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$|\.eot$|^(?!.*\.inline\.svg$).*\.svg$/,
+        loaders: ['url-loader', 'file-loader'],
       },
     ],
   },

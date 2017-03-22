@@ -26,7 +26,7 @@ class Login extends Component {
   submitLoginInfo() {
     axios.post('/api/user/authentication', this.state)
     .then(({ data }) => {
-      console.log(data)
+      this.props.router.push(`/dashboard/${data.id}`)
     });
   }
   updateInput(event) {
