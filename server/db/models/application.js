@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    rejected: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     postURL: {
       type: DataTypes.STRING,
     },

@@ -65,5 +65,5 @@ router.route('/registration')
 
 router.route('/authentication')
   .post(getUserAuthentication);
-
+  
 module.exports = router;

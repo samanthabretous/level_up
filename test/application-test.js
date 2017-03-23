@@ -9,7 +9,7 @@ const Application = models.application;
 describe('Application tests', () => {
   // fake application data that we'll use for tests
   const apps = [
-    { location: 'San Fran', dateApplied: '3/20/17', postURL: 'github.com', rank: 3 },
+    { location: 'San Fran', dateApplied: '3/20/17', postURL: 'github.com', rank: 3, status: 5 },
     { location: 'NY', dateApplied: '3/20/17', postURL: 'twitter.com', rank: 3 },
     { location: 'Austin', dateApplied: '3/21/17', postURL: 'facebook.com', rank: 5 },
   ];
@@ -20,7 +20,7 @@ describe('Application tests', () => {
     .then(() => Application.bulkCreate(apps))
     .catch(err => console.log('DB Err!', err)));
 
-  it('/api/application get reequest should respond with all applications', (done) => {
+  it('/api/application get request should respond with all applications', (done) => {
     supertest(server)
       .get('/api/application/')
       .end((err, res) => {
@@ -38,27 +38,38 @@ describe('Application tests', () => {
       .send(newApp)
       .end((err, res) => {
         expect(res.body).be.a('object');
-        expect(res.body).to.have.property('postURL');
         expect(res.body).to.have.property('userId');
         done();
       });
   });
 
-  it('"/api/application/id/:id" should respond with a user', (done) => {
+  it('"/api/application/id/:id" should respond with a application', (done) => {
     supertest(server)
     .get('/api/application/id/4')
     .end((err, res) => {
-      // expect(res.body).be.a('object');
       expect(res.body.postURL).equal('engineering.com');
       done();
     });
   });
 
-  // clean up database after running test
-  after((done) => {
-    Application.destroy({
-      where: { id: 4 },
+  it('"/api/application/user/:userId" should respond with all applications based off the user', (done) => {
+    supertest(server)
+    .get('/api/application/user/1')
+    .end((err, res) => {
+      expect(res.body.length).gt(0);
+      expect(res.body).be.a('array');
+      expect(res.body[0]).to.have.property('company');
+      done();
     });
-    done();
+  });
+
+  it('"/api/application/rejected/:id" should update application', (done) => {
+    supertest(server)
+    .put('/api/application/rejected/1')
+    .send({ rejected: true })
+    .end((err, res) => {
+      expect(res.body).eql([ 1 ]);
+      done();
+    });
   });
 });

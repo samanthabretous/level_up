@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const bcrypt = require('bcrypt-nodejs');
 const models = require('../db/models/index');
 
 const Application = models.application;
@@ -49,11 +48,51 @@ const getApplicationById = (req, res) => {
   .catch(err => res.status(500).send(err.message));
 };
 
+const updateRankStatusOrRejected = (req, res) => {
+  Application.update({
+    rank: req.body.rank,
+    status: req.body.status,
+    rejected: req.body.rejected,
+  }, {
+    where: {
+      id: req.params.id,
+    },
+  })
+  .then(() => Application.findAll({
+    where: {
+      userId: req.params.userId,
+    },
+    attributes: ['rank', 'createdAt', 'updatedAt', 'status', 'id', 'rejected'],
+    include: [models.company],
+  }))
+  .then(apps => res.send(apps))
+  .catch(err => res.status(500).send(err.message));
+};
+
+const getAllUserApplications = (req, res) => {
+  Application.findAll({
+    where: {
+      userId: req.params.userId,
+    },
+    attributes: ['rank', 'createdAt', 'updatedAt', 'status', 'id', 'rejected'],
+    include: [models.company],
+  })
+  .then(userApplications => res.send(userApplications))
+  .catch(err => res.status(500).send(err.message));
+};
+
 router.route('/')
   .get(getAllApplications)
   .post(postNewApplication);
 
 router.route('/id/:id')
   .get(getApplicationById);
+
+// update routes
+router.route('/update/:id/user/:userId')
+  .put(updateRankStatusOrRejected);
+
+router.route('/user/:userId')
+  .get(getAllUserApplications);
 
 module.exports = router;

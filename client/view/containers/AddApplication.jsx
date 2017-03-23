@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
-import { Button, Input, Form } from 'semantic-ui-react'
+import { Button, Input, Form } from 'semantic-ui-react';
 import { CompaniesDropDown } from '../components';
 
 const mapDispatchToProps = dispatch => (
@@ -15,6 +15,7 @@ const mapDispatchToProps = dispatch => (
 const mapStateToProps = state => ({
   state,
 });
+
 class AddApplication extends Component {
   constructor() {
     super();
@@ -43,7 +44,7 @@ class AddApplication extends Component {
   postApplication() {
     axios.post('/api/application', this.state)
     .then(({ data }) => {
-      this.props.router.push(`dashboard/${this.params.userId}`)
+      this.props.router.push(`dashboard/${this.params.userId}`);
     });
   }
   render() {

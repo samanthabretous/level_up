@@ -21,7 +21,6 @@ const applyExpressMiddleware = (app) => {
     app.use(webpackDevMiddleware(compiler, {
       noInfo: true,
       publicPath: config.output.publicPath,
-      hot: true,
       watchOptions: { ignored: /node_modules/ },
       stats: {
         colors: true,

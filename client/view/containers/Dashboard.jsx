@@ -1,4 +1,18 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import _ from 'lodash';
+import { Button } from 'semantic-ui-react';
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+
+  }, dispatch)
+);
+
+const mapStateToProps = state => ({
+  applications: state.application.applications,
+});
 
 class Dashboard extends Component {
   constructor() {
@@ -11,7 +25,14 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.addApplication}>Add Application</button>
+        <Button animated="fade" positive onClick={this.addApplication}>
+          <Button.Content visible>
+            Add Application
+          </Button.Content>
+          <Button.Content hidden>
+            Get That Job Girl
+          </Button.Content>
+        </Button>
         {this.props.children}
       </div>
     );
@@ -20,11 +41,11 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   children: PropTypes.node,
-  router: PropTypes.object.isRequired,
+  router: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 Dashboard.defaultProps = {
   children: null,
 };
 
-export default Dashboard;
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
