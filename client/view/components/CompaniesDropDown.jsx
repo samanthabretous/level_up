@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Select } from 'semantic-ui-react';
+import { Dropdown } from 'semantic-ui-react';
 import { selectCompany } from '../../redux/company';
 
 const mapDispatchToProps = dispatch => (
@@ -19,10 +19,10 @@ const CompaniesDropDown = ({ companies, selectCompany }) => {
     { value: company.id, key: company.id, text: company.name }
   ))
   return (
-    <Select
+    <Dropdown
       options={allCompanies}
       placeholder="Choose Company"
-      onChange={e => selectCompany(parseInt(e.target.value))}
+      onChange={(e, data) => selectCompany(data.value)}
     />
   );
 };

@@ -1,16 +1,16 @@
 const router = require('express').Router();
 const models = require('../db/models/index');
 
-const Company = models.company;
-// /api/company
-const getAllCompanies = (req, res) => {
-  Company.findAll()
+const Position = models.position;
+// /api/position
+const getAllPositions = (req, res) => {
+  Position.findAll()
   .then(apps => res.send(apps));
 };
 
-// /api/company
-const postNewCompany = (req, res) => {
-  Company.create(req.body)
+// /api/position
+const postNewPosition = (req, res) => {
+  Position.create(req.body)
   .then((app) => {
     res.send(app);
   })
@@ -19,9 +19,9 @@ const postNewCompany = (req, res) => {
   });
 };
 
-// /api/company/id/:id
-const getCompanyById = (req, res) => {
-  Company.findById(req.params.id)
+// /api/position/id/:id
+const getPositionById = (req, res) => {
+  Position.findById(req.params.id)
   .then((app) => {
     res.send(app);
   })
@@ -29,10 +29,10 @@ const getCompanyById = (req, res) => {
 };
 
 router.route('/')
-  .get(getAllCompanies)
-  .post(postNewCompany);
+  .get(getAllPositions)
+  .post(postNewPosition);
 
 router.route('/id/:id')
-  .get(getCompanyById);
+  .get(getPositionById);
 
 module.exports = router;

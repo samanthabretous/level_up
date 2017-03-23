@@ -2,7 +2,13 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import { AddApplication, App, Home, Dashboard, ListUserApplication } from './containers/index';
 import { getCompanies } from '../redux/company';
+import { getPositions } from '../redux/position';
 import { getApplications } from '../redux/application';
+
+const getCompaniesAndPositions = () => {
+  getCompanies();
+  getPositions();
+};
 
 export default (
   <Route path="/" component={App} >
@@ -14,7 +20,7 @@ export default (
       />
       <Route
         path="addApplication"
-        onEnter={getCompanies}
+        onEnter={getCompaniesAndPositions}
         component={AddApplication}
       />
     </Route>

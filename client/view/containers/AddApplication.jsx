@@ -3,8 +3,9 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
-import { Button, Input, Form } from 'semantic-ui-react';
-import { CompaniesDropDown } from '../components';
+import { Button, Input, Grid, Dropdown } from 'semantic-ui-react';
+import { CompaniesDropDown, PositionDropDown } from '../components';
+import statusOptions from '../utils/statusOptions';
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
@@ -13,16 +14,15 @@ const mapDispatchToProps = dispatch => (
 );
 
 const mapStateToProps = state => ({
-  state,
+  pickedCompanyId: state.company.pickedCompanyId,
+  pickedPositionId: state.position.pickedPositionId,
 });
 
 class AddApplication extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       postURL: '', // string
-      positionId: null, // int
-      companyId: null, // int
       location: '', // string
       dateApplied: '', // date
       status: null, // int
@@ -42,17 +42,32 @@ class AddApplication extends Component {
     }));
   }
   postApplication() {
-    axios.post('/api/application', this.state)
-    .then(({ data }) => {
-      this.props.router.push(`dashboard/${this.params.userId}`);
+    axios.post('/api/application', _.assign(this.state, {
+      companyId: this.props.pickedCompanyId,
+      positionId: this.props.pickedPositionId,
+    }))
+    .then(() => {
+      this.props.router.push(`dashboard/${this.props.params.userId}`);
     });
   }
   render() {
     const { postURL, location, dateApplied, status, coverLetter } = this.state;
+    console.log(_.assign(this.state, {
+      companyId: this.props.pickedCompanyId,
+      positionId: this.props.pickedPositionId,
+      userId: this.props.params.userId,
+    }))
     return (
-      <Form size="large" widths="equal">
-        <CompaniesDropDown />
-        <Form.Field>
+      <Grid size="large" widths="equal" onSubmit={e => e.preventDefault}>
+        <Grid.Row>
+          <Grid.Column width={6}>
+            <CompaniesDropDown />
+          </Grid.Column>
+          <Grid.Column width={6}>
+            <PositionDropDown />
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
           <label htmlFor="postURL">Enter Job Post URL</label>
           <Input
             placeholder="enter job post url" onChange={this.handleInput}
@@ -60,10 +75,10 @@ class AddApplication extends Component {
             name="postURL"
             type="text"
           />
-        </Form.Field>
-        <Form.Group>
-          <Form.Field>
-            <label htmlFor="location">Enter Job Post URL</label>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={6}>
+            <label htmlFor="location">Enter Job Post Location</label>
             <Input
               placeholder="enter job location"
               onChange={this.handleInput}
@@ -71,9 +86,9 @@ class AddApplication extends Component {
               name="location"
               type="text"
             />
-          </Form.Field>
-          <Form.Field>
-            <label htmlFor="dateApplied">Enter Job Post URL</label>
+          </Grid.Column>
+          <Grid.Column width={6}>
+            <label htmlFor="dateApplied">Enter Date Applied</label>
             <Input
               placeholder="enter date applied"
               onChange={this.handleInput}
@@ -81,27 +96,42 @@ class AddApplication extends Component {
               name="dateApplied"
               type="date"
             />
-          </Form.Field>
-        </Form.Group>
-        <Button onClick={this.handleCoverLetterButton}>
-          Submitted Cover Letter?
-          <span>{coverLetter ? 'NO' : 'YES'}</span>
-        </Button>
-        <div>
-          Rank:
-          {_.range(1, 6).map(rank => (
-            <Button key={rank} onClick={() => this.setState({ rank })}>{rank}</Button>
-          ))}
-        </div>
-        <Button />
-        <Button type="submit" onClick={this.postApplication}>Add Application</Button>
-      </Form>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Button onClick={this.handleCoverLetterButton}>
+            Submitted Cover Letter?
+            <span>{coverLetter ? 'NO' : 'YES'}</span>
+          </Button>
+          <div>
+            Rank:
+            {_.range(1, 6).map(rank => (
+              <Button key={rank} onClick={() => this.setState({ rank })}>{rank}</Button>
+            ))}
+          </div>
+          <Dropdown
+            onChange={(e, data) => this.setState({ status: data.value })}
+            placeholder="Add Status"
+            options={statusOptions}
+          />
+        </Grid.Row>
+        <Grid.Row>
+          <Button color="teal" type="submit" onClick={this.postApplication}>Add Application</Button>
+        </Grid.Row>
+      </Grid>
     );
   }
 }
 
 AddApplication.propTypes = {
   router: PropTypes.objectOf(PropTypes.any).isRequired,
+  pickedCompanyId: PropTypes.number,
+  pickedPositionId: PropTypes.number,
+};
+
+AddApplication.defaultProps = {
+  pickedCompanyId: null,
+  pickedPositionId: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddApplication);

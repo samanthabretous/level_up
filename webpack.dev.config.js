@@ -1,11 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-require('react-hot-loader/patch');
-
 
 module.exports = {
   entry: [
-    'react-hot-loader/patch', // RHL patch
     './client/view/Entry.jsx', // appʼs entry point
   ],
   output: {
