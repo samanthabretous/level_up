@@ -1,12 +1,13 @@
 import axios from 'axios';
-import store from './store';
 import _ from 'lodash';
+import store from './store';
 
 // -------------------
 // types
 // -------------------
 const GET_ALL_COMPANIES = 'get_all_companies';
 const SELECT_COMPANY = 'select_company';
+const NEW_COMPANY = 'new_company';
 
 // -------------------
 // actions
@@ -20,6 +21,13 @@ export const selectCompany = pickedCompanyId => ({
   type: SELECT_COMPANY,
   pickedCompanyId,
 });
+
+const addCompanyToCompanies = newestCompany => ({
+  type: NEW_COMPANY,
+  newestCompanyId: JSON.parse(newestCompany.id),
+  newestCompany,
+});
+
 // thunk action
 // getState can also be pass thru as an argument after dispatch
 export const getCompaniesAsync = () => (dispatch) => {
@@ -32,6 +40,14 @@ export const getCompaniesAsync = () => (dispatch) => {
 export const getCompanies = () => {
   store.dispatch(getCompaniesAsync());
 };
+
+export const addCompany = name => (dispatch) => {
+  axios.post('/api/company', { name })
+  .then(({ data }) => {
+    dispatch(addCompanyToCompanies(data));
+  });
+};
+
 // -------------------
 // reducer
 // -------------------
@@ -46,6 +62,11 @@ export default (state = initialState, action) => {
       return _.assign({}, state, { companies: action.companies });
     case SELECT_COMPANY:
       return _.assign({}, state, { pickedCompanyId: action.pickedCompanyId });
+    case NEW_COMPANY:
+      return _.assign({}, state, {
+        pickedCompanyId: action.newestCompanyId,
+        companies: [...state.companies, action.newestCompany],
+      });
     default:
       return state;
   }

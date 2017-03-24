@@ -25,14 +25,6 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <Button animated="fade" positive onClick={this.addApplication}>
-          <Button.Content visible>
-            Add Application
-          </Button.Content>
-          <Button.Content hidden>
-            Get That Job Girl
-          </Button.Content>
-        </Button>
         {this.props.children}
       </div>
     );

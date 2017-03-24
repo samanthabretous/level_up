@@ -5,14 +5,14 @@ const Company = models.company;
 // /api/company
 const getAllCompanies = (req, res) => {
   Company.findAll()
-  .then(apps => res.send(apps));
+  .then(companies => res.send(companies));
 };
 
 // /api/company
 const postNewCompany = (req, res) => {
   Company.create(req.body)
-  .then((app) => {
-    res.send(app);
+  .then((company) => {
+    res.send(company);
   })
   .catch((err) => {
     res.status(500).send(err.message);
@@ -22,8 +22,8 @@ const postNewCompany = (req, res) => {
 // /api/company/id/:id
 const getCompanyById = (req, res) => {
   Company.findById(req.params.id)
-  .then((app) => {
-    res.send(app);
+  .then((company) => {
+    res.send(company);
   })
   .catch(err => res.status(500).send(err.message));
 };

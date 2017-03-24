@@ -20,7 +20,7 @@ const PositionDropDown = ({ positions, selectPosition }) => {
   ));
   return (
     <Dropdown
-      size="huge"
+      button
       options={allPositions}
       placeholder="Choose Position"
       onChange={(e, data) => selectPosition(parseInt(data.value))}
