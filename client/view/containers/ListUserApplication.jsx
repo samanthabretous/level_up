@@ -23,16 +23,25 @@ class ListUserApplication extends Component {
   constructor() {
     super();
     this.goToAppPage = this.goToAppPage.bind(this);
+    this.addApplication = this.addApplication.bind(this);
   }
   goToAppPage(id) {
     this.props.router.push(`/dashboard/${this.props.params.userId}/application/${id}`);
+  }
+  addApplication() {
+    this.props.router.push(`addApplication`);
   }
   render() {
     const { applications, updateRankStatusOrRejected, params: { userId } } = this.props;
     const rankOptions = _.range(0, 6).map(num => ({ text: num, value: num }));
     return (
-      <div>
-        <Button animated="fade" positive onClick={this.addApplication}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Button
+          style={{ width: '80%', height: '10vh', fontSize: 24, marginBottom: '3vh' }}
+          animated="fade"
+          positive
+          onClick={this.addApplication}
+        >
           <Button.Content visible>
             Add Application
           </Button.Content>

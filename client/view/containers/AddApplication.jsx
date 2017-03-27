@@ -54,17 +54,19 @@ class AddApplication extends Component {
   }
   render() {
     const { postURL, location, dateApplied, status, coverLetter } = this.state;
-    console.log(this.props.pickedCompanyId);
     return (
-      <Grid columns={3} divided size="large" onSubmit={e => e.preventDefault}>
+      <Grid divided size="large" onSubmit={e => e.preventDefault}>
         <Grid.Row>
-          <Grid.Column>
+          <Grid.Column width={6}>
+            <label htmlFor="company">Company</label>
             <CompaniesDropDown />
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column width={5}>
+            <label htmlFor="position">Position</label>
             <PositionDropDown />
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column width={5}>
+            <label htmlFor="source">Source</label>
             <SourceDropDown />
           </Grid.Column>
         </Grid.Row>
@@ -77,6 +79,14 @@ class AddApplication extends Component {
               value={postURL}
               name="postURL"
               type="text"
+            />
+          </Grid.Column>
+          <Grid.Column width={7}>
+            <Dropdown
+              button fluid
+              onChange={(e, data) => this.setState({ status: data.value })}
+              placeholder="Choose Status of Application"
+              options={statusOptions}
             />
           </Grid.Column>
         </Grid.Row>
@@ -117,12 +127,6 @@ class AddApplication extends Component {
               </Button>
             ))}
           </div>
-          <Dropdown
-            button
-            onChange={(e, data) => this.setState({ status: data.value })}
-            placeholder="Choose Status of Application"
-            options={statusOptions}
-          />
         </Grid.Row>
         <Grid.Row>
           <Button color="teal" type="submit" onClick={this.postApplication}>Submit Application</Button>

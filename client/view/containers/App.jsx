@@ -1,19 +1,14 @@
 import React, { Component, PropTypes } from 'react';
-import axios from 'axios';
+import { Navbar } from '../components';
 
 class App extends Component {
-  componentDidMount() {
-    axios.get('/auth')
-    .then((username) => {
-      if (username && username[0] !== '<') {
-        this.setState({ username });
-      }
-    });
-  }
   render() {
     return (
       <div>
-        {this.props.children}
+        <Navbar userId={this.props.params.userId} />
+        <section style={{ height: '90vh', padding: '5%' }}>
+          {this.props.children}
+        </section>
       </div>
     );
   }
@@ -21,6 +16,8 @@ class App extends Component {
 
 App.propTypes = {
   children: PropTypes.node.isRequired,
+  params: PropTypes.object.isRequired,
 };
+
 
 export default App;

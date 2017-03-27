@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import 'semantic-ui-css/semantic.css';
 import store from '../redux/store';
 import routes from './Routes';
+import './scss/style.scss';
 
 const renderApp = (CurrentRoute) => {
   render(

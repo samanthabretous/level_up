@@ -20,10 +20,10 @@ const SourceDropDown = ({ sources, selectSource }) => {
   ));
   return (
     <Dropdown
-      button
+      button fluid closeOnChange
       options={allSources}
       placeholder="Choose Source"
-      onChange={(e, data) => selectSource(parseInt(data.value))}
+      onChange={(e, data) => selectSource(JSON.parse(data.value))}
     />
   );
 };

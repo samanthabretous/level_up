@@ -20,10 +20,10 @@ const PositionDropDown = ({ positions, selectPosition }) => {
   ));
   return (
     <Dropdown
-      button
+      button fluid closeOnChange
       options={allPositions}
       placeholder="Choose Position"
-      onChange={(e, data) => selectPosition(parseInt(data.value))}
+      onChange={(e, data) => selectPosition(JSON.parse(data.value))}
     />
   );
 };
