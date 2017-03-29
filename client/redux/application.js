@@ -1,6 +1,5 @@
 import axios from 'axios';
 import store from './store';
-import _ from 'lodash';
 
 // -------------------
 // types
@@ -39,24 +38,42 @@ export const getApplications = (nextState) => {
 export const getApplicationByIdAsync = appId => (dispatch) => {
   axios.get(`/api/application/id/${appId}`)
   .then(({ data }) => {
-    console.log(data)
     dispatch(oneApplication(data));
   })
   .catch(err => err);
 };
 
 export const getApplicationById = (nextState) => {
-  if (nextState)
+  if (nextState) {
     store.dispatch(getApplicationByIdAsync(nextState.params.appId));
+  }
 };
 
-export const updateRankStatusOrRejected = (appId, userId, rank, status, rejected) => (dispatch) => (
+export const updateRankStatusOrRejected = (appId, userId, rank, status, rejected) => dispatch => (
   axios.put(`/api/application/update/${appId}/user/${userId}`, { rank, status, rejected })
   .then(({ data }) => {
     dispatch(allApplications(data));
   })
   .catch(err => err)
 );
+
+export const postInterview = interviewData => dispatch => (
+  axios.post(`/api/application/id/${interviewData.appId}/interview`, interviewData)
+  .then(({ data }) => {
+    dispatch(oneApplication(data));
+  })
+  .catch(err => err)
+);
+
+export const addContact = contactData => (dispatch) => {
+  console.log(contactData)
+  axios.post('/api/contact', contactData)
+  .then(({ data }) => {
+    console.log(data)
+    // dispatch(addContact(data));
+  })
+  .catch(err => err)
+};
 
 // -------------------
 // reducer

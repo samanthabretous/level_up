@@ -11,7 +11,7 @@ const getCompaniesPositionsAndSources = () => {
   getPositions();
   getSources();
 };
-console.log(getApplicationById());
+
 export default (
   <Route path="/" component={App} >
     <IndexRoute component={Home} />

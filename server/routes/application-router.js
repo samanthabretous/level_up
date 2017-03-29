@@ -2,6 +2,8 @@ const router = require('express').Router();
 const models = require('../db/models/index');
 
 const Application = models.application;
+const Interview = models.interview;
+
 // /api/application
 const getAllApplications = (req, res) => {
   Application.findAll()
@@ -18,10 +20,8 @@ const postNewApplication = (req, res) => {
     res.status(500).send(err.message);
   });
 };
-
-// /api/application/id/:id
-const getApplicationById = (req, res) => {
-  Application.findById(req.params.id, {
+const findApplication = (id, res) => {
+  Application.findById(id, {
     attributes: {
       exclude: ['positionId', 'companyId', 'sourceId'],
     },
@@ -46,6 +46,18 @@ const getApplicationById = (req, res) => {
     res.send(app);
   })
   .catch(err => res.status(500).send(err.message));
+};
+
+// /api/application/id/:id
+const getApplicationById = (req, res) => {
+  findApplication(req.params.id, res);
+};
+
+const postInterview = (req, res) => {
+  Interview.create(req.body)
+  .then(() => {
+    findApplication(req.body.applicationId, res);
+  });
 };
 
 const updateRankStatusOrRejected = (req, res) => {
@@ -87,6 +99,9 @@ router.route('/')
 
 router.route('/id/:id')
   .get(getApplicationById);
+
+router.route('/id/:id/interview')
+  .post(postInterview)
 
 // update routes
 router.route('/update/:id/user/:userId')

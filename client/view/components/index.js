@@ -1,3 +1,5 @@
+import AddContact from './AddContact';
+import AddInterview from './AddInterview';
 import ApplicationStatus from './ApplicationStatus';
 import AppMainInfo from './AppMainInfo';
 import CompaniesDropDown from './CompaniesDropDown';
@@ -10,6 +12,8 @@ import PositionDropDown from './PositionDropDown';
 import SourceDropDown from './SourceDropDown';
 
 export {
+  AddContact,
+  AddInterview,
   ApplicationStatus,
   AppMainInfo,
   CompaniesDropDown,
