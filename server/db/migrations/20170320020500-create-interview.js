@@ -11,8 +11,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0,
       },
+      content: {
+        type: Sequelize.STRING,
+      },
       when: {
         type: Sequelize.DATE,
+      },
+      time: {
+        type: Sequelize.STRING,
       },
       codeChallenge: {
         type: Sequelize.BOOLEAN,
@@ -22,7 +28,7 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       type: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.STRING,
         validate: {
           isIn: [['phone', 'video', 'on-site']],
         },
@@ -47,6 +53,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
+      },
+      applicationId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'applications', key: 'id' }
       },
     });
   },

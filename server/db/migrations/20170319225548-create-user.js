@@ -9,6 +9,7 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
+        unique: true,
         validate: {
           len: [5, 100],
         },

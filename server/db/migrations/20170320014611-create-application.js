@@ -7,8 +7,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        type: Sequelize.STRING,
+      rank: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
+      rejected: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       postURL: {
         type: Sequelize.STRING,
@@ -36,6 +41,22 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'users', key: 'id' }
+      },
+      companyId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'companies', key: 'id' }
+      },
+      positionId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'positions', key: 'id' }
+      },
+      sourceId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'sources', key: 'id' }
+      }
     });
   },
   down(queryInterface, Sequelize) {
